@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Völundur Hafstað" />
+<meta name="author" content="Völundur Hafstað, Deborah Figueiredo Nacer de Oliveira" />
 
 
 <title>Data handling using the Tidyverse</title>
@@ -369,7 +369,8 @@ pre code {
 
 
 <h1 class="title toc-ignore">Data handling using the Tidyverse</h1>
-<h4 class="author">Völundur Hafstað</h4>
+<h4 class="author">Völundur Hafstað, Deborah Figueiredo Nacer de
+Oliveira</h4>
 
 </div>
 
@@ -429,12 +430,12 @@ efficient and readable data analysis. We will be working with sample
 data sets that we have provided in the course material.</p>
 <p>This file is an <a href="http://rmarkdown.rstudio.com">R Markdown</a>
 Notebook. It is a very convenient file format when you are writing lots
-of text along side your R code, for example when writing reports. In an
-R markdown file you can insert code “chunks” and run them individually.
+of text alongside your R code, for example when writing reports. In an R
+markdown file you can insert code “chunks” and run them individually.
 They will appear in the document as gray text boxes. The output of that
 code is then output directly underneath the code chunk.</p>
 <p>We start by loading in the tidyverse suite of packages using the
-library() function:</p>
+<code>library()</code> function:</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
@@ -457,13 +458,13 @@ downloaded these files to. In my case they are located in a folder
 called “r_course”, in a sub-folder called “data”.</p>
 <pre class="r"><code>setwd(&quot;/home/v/projects/r_course/&quot;)</code></pre>
 <p>Now R knows where to look for any files that you want to read in. To
-actually open them in R we will use “read_tsv()”. Since we have already
-set a working directory, we do not need to give R the full path to the
-file, just the relative path from the working directory.</p>
+actually open them in R we will use <code>read_tsv()</code>. Since we
+have already set a working directory, we do not need to give R the full
+path to the file, just the relative path from the working directory.</p>
 <p>The first data set we will work with is a list of all domestic
 flights departing from three New York airports in 2013. When we read in
-data we want to assign it a variable name that makes it obvious what we
-are working with. In the case a simple name like “flights” will do
+data, we want to assign it to a variable name that makes it obvious what
+we are working with. In this case a simple name like “flights” will do
 nicely.</p>
 <pre class="r"><code>flights &lt;- read_tsv(&quot;data/nycflights13_flights.txt&quot;)</code></pre>
 <pre><code>## Rows: 336776 Columns: 19
@@ -475,15 +476,15 @@ nicely.</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>When we read in data with read_tsv(), it gives some of useful
-information about the file we have just read in, although this can be
-disabled. Here we can see that the file we read in has around 336.000
-rows of data and 19 columns. read_tsv() also tries to guess the
-formatting of each column, i.e. whether it is a character, numeric,
-logical etc.</p>
+<p>When we read in data with <code>read_tsv()</code>, it gives some
+useful information about the file we have just read in, although this
+can be disabled. Here we can see that the file we read in has around
+336,000 rows of data and 19 columns. <code>read_tsv()</code> also tries
+to guess the type of each column, i.e. whether it is a character,
+numeric, logical etc.</p>
 <p>To get a better idea of what the data looks like we can use the
-functions “head()” and “tail()” to see the first and last rows of the
-data.</p>
+functions <code>head()</code> and <code>tail()</code> to see the first
+and last rows of the data.</p>
 <pre class="r"><code>head(flights)</code></pre>
 <pre><code>## # A tibble: 6 × 19
 ##    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -511,7 +512,7 @@ data.</p>
 ## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 ## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Another great function to quickly see what you are working with is
-the function “glimpse()”.</p>
+the function <code>glimpse()</code>.</p>
 <pre class="r"><code>glimpse(flights)</code></pre>
 <pre><code>## Rows: 336,776
 ## Columns: 19
@@ -534,8 +535,9 @@ the function “glimpse()”.</p>
 ## $ hour           &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6…
 ## $ minute         &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0…
 ## $ time_hour      &lt;dttm&gt; 2013-01-01 10:00:00, 2013-01-01 10:00:00, 2013-01-01 1…</code></pre>
-<p>glimpse() shows you every column in the data frame, which can be
-convenient if you are working with many columns of data.</p>
+<p><code>glimpse()</code> shows you every column in the data frame,
+which can be convenient if you are working with many columns of
+data.</p>
 </div>
 <div id="data-wrangling" class="section level1">
 <h1>Data wrangling</h1>
@@ -543,9 +545,9 @@ convenient if you are working with many columns of data.</p>
 to be able to easily find the exact data that you need.</p>
 <p>For example, let’s say that we are only interested in how far the
 average flight from NYC is. The flights data frame contains much more
-information that that, but the only column of data we are interested in
+information than that, but the only column of data we are interested in
 is “distance”.</p>
-<p>We might also be only be interested in flights departing from JFK
+<p>We might also only be interested in flights departing from JFK
 airport. The flights data contains information from three different
 airports in an approximately even ratio, so in this case about
 two-thirds of the rows are not relevant to us.</p>
@@ -553,10 +555,10 @@ two-thirds of the rows are not relevant to us.</p>
 extract just the data that you need.</p>
 <div id="filter" class="section level2">
 <h2>filter()</h2>
-<p>filter() is a function that subsets rows, keeping only those that we
-are interested in. We can tell the function what rows we are interested
-in by giving it a “condition” to filter by. For example to filter
-flights that originate from JFK:</p>
+<p><code>filter()</code> is a function that subsets rows, keeping only
+those that we are interested in. We can tell the function what rows we
+are interested in by giving it a “condition” to filter by. For example
+to filter flights that originate from JFK we would use:</p>
 <pre class="r"><code>filter(flights, origin == &#39;JFK&#39;)</code></pre>
 <pre><code>## # A tibble: 111,279 × 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -574,20 +576,22 @@ flights that originate from JFK:</p>
 ## # … with 111,269 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;dbl&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>Here we supplied the filter() function with two things. The first is
-the data frame “flights”, this tells filter() what data frame it is we
-want to apply the filter on. The next is the filter condition: “origin
-== ‘JFK’”. “origin” is the name of the column in the data frame that we
-are using to filter the data, and ‘JFK’ is what needs to be contained in
-that particular cell in order to be kept. The double equals sign “==” is
-a comparison operator and will return either true or false. Note that
-this is <strong>not</strong> the same as “=”, which is used to assign
-variables. One of the most common sources of errors when you are
-beginning to learn R is to write “=” when you meant to write “==”!</p>
-<p>The filter() function can be supplied with more than one conditional.
-For example if we want to find flights between JFK and Miami airport
-(MIA) that departed between 6 and 8 in the morning, we can string all of
-those together using the “&amp;” (and) and “|” (or) symbols.</p>
+<p>Here we supplied the <code>filter()</code> function with two things.
+The first is the data frame “flights”. This tells <code>filter()</code>
+on what data frame we want to apply the filter. The next is the filter
+condition: <code>origin == &#39;JFK&#39;</code>. “origin” is the name of the
+column in the data frame that we are using to filter the data, and ‘JFK’
+is what needs to be contained in that particular cell in order to be
+kept. The double equal sign “==” is a comparison operator and will
+return either true or false. Note that this is <strong>not</strong> the
+same as “=”, which can be used to assign variables. One of the most
+common sources of errors when you are beginning to learn R is to write
+“=” when you meant to write “==”!</p>
+<p>The <code>filter()</code> function can be supplied with more than one
+conditional. For example if we want to find flights between JFK and
+Miami airport (MIA) that departed between 6 and 8 in the morning, we can
+string all of those together using the “&amp;” (and) and “|” (or)
+symbols.</p>
 <pre class="r"><code>filter(flights, origin == &quot;JFK&quot; &amp; dest == &quot;MIA&quot; &amp; dep_time &gt; 600 &amp; dep_time &lt; 800)</code></pre>
 <pre><code>## # A tibble: 574 × 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -616,8 +620,8 @@ combined?</li>
 </div>
 <div id="select" class="section level2">
 <h2>select()</h2>
-<p>The select() functions is similar to filter(), but it subsets columns
-instead of rows.</p>
+<p>The <code>select()</code> function is similar to
+<code>filter()</code>, but it subsets columns instead of rows.</p>
 <pre class="r"><code>select(flights, tailnum, air_time, distance)</code></pre>
 <pre><code>## # A tibble: 336,776 × 3
 ##    tailnum air_time distance
@@ -633,13 +637,13 @@ instead of rows.</p>
 ##  9 N593JB       140      944
 ## 10 N3ALAA       138      733
 ## # … with 336,766 more rows</code></pre>
-<p>The first argument we supply select() is the name of the data frame,
-all subsequent arguments are the names of the columns we want to keep.
-The order of the columns will be in the order you supply them to the
-function.</p>
-<p>select() is quite flexible in how you specify the column names, you
-can give it the column number and/or the column name, and the column
-names do not have to be in quotes:</p>
+<p>The first argument we supply to <code>select()</code> is the name of
+the data frame, all subsequent arguments are the names of the columns we
+want to keep. The order of the columns in the output will be the order
+you supply them to the function.</p>
+<p><code>select()</code> is quite flexible in how you specify the column
+names. You can give it the column number and/or the column name, and the
+column names do not have to be in quotes:</p>
 <pre class="r"><code>select(flights, 1:3, 7, origin, &quot;dep_delay&quot;, arr_delay)</code></pre>
 <pre><code>## # A tibble: 336,776 × 7
 ##     year month   day arr_time origin dep_delay arr_delay
@@ -683,12 +687,13 @@ the vector that are not column names in the data frame.</p>
 </div>
 <div id="mutate" class="section level2">
 <h2>mutate()</h2>
-<p>Often, what we are interested in is not explicitly given in our data
+<p>Often what we are interested in is not explicitly given in our data
 but can be calculated using values from several columns. We can create
-new columns in our data frame using the mutate() function. For example,
-let’s say that we are interested in how fast an airplane was going. We
-can calculate the speed using information from the “distance” and
-“air_time” columns and store it in a new column “speed”:</p>
+new columns in our data frame using the <code>mutate()</code> function.
+For example, let’s say that we are interested in how fast an airplane
+was going. We can calculate the speed using information from the
+“distance” and “air_time” columns and store it in a new column
+“speed”:</p>
 <pre class="r"><code>mutate(flights, speed = distance / air_time)</code></pre>
 <pre><code>## # A tibble: 336,776 × 20
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -708,7 +713,7 @@ can calculate the speed using information from the “distance” and
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;,
 ## #   speed &lt;dbl&gt;</code></pre>
 <p>The resulting data frame is now 20 columns instead of 19, with the
-new columns “speed” positioned last.</p>
+new column “speed” positioned last.</p>
 </div>
 </div>
 <div id="code-styles-and-the-pipe" class="section level1">
@@ -732,36 +737,39 @@ the variable “x”. In each line of code we overwrite x by applying a new
 function to it, modifying it in some way. This is a good way to write
 your code as it makes it fairly readable for other people. A good rule
 of thumb is to only do “one thing” in each line of code (in this case
-filter(), select(), mutate). The downside of this style is it does get a
-bit redundant always having to type “x &lt;- ….”.</p>
+<code>filter()</code>, <code>select()</code>, <code>mutate()</code>).
+The downside of this style is it does get a bit redundant always having
+to type <code>x &lt;- ...</code>.</p>
 <p>R doesn’t care if your code is readable or not as long as it executes
-without errors. If you wanted to you can get exactly the same output
+without errors. If you wanted to you could get exactly the same output
 using a single line of code using the “unreadable” way:</p>
 <pre class="r"><code>y &lt;- mutate(select(filter(flights, origin == &quot;JFK&quot;), tailnum, air_time, distance), speed = distance / air_time) # complicated and unreadable code! 
 y</code></pre>
-<p>To R this is exactly the same block of code, in fact it is probably a
+<p>To R this is exactly the same block of code. In fact it is probably a
 bit more efficient since it does not have to store the intermediate
 steps! However this is completely unreadable for other people and you
-should never write code like this if you can avoid it. In cases where
+should avoid writing code like this as much as you can. In cases where
 you are forced to write out code like this it is important to comment
 the code so that people know at a glance what it is you have done.</p>
 <p>We will be using a bit of a different way to write our code, using
 something known as the <a href="https://magrittr.tidyverse.org/reference/pipe.html">pipe</a>. The
-pipe is written “%&gt;%” (keyboard shortcut ctrl+shift+m) and is read as
-<em>and then</em>. It replaces the first argument of a function on its
-right with whatever output is on the left. For example</p>
+pipe is written <code>%&gt;%</code> (keyboard shortcut ctrl+shift+m or
+command+shift+m) and is read as <em>and then</em>. It replaces the first
+argument of a function on its right with whatever output comes from the
+code on the left. For example</p>
 <pre class="r"><code>flights %&gt;%                # take the &quot;flights&quot; data frame, and then
   filter(origin == &quot;JFK&quot;)  # apply the filter() function</code></pre>
 <p>is the same thing as writing:</p>
 <pre class="r"><code>filter(flights, origin == &quot;JFK&quot;)</code></pre>
 <p>You would read the code as taking the flights data <em>and then</em>
-applying the filter() function. Notice that when we use the pipe we do
-not have to type in “flights” inside filter() anymore, only the filter
-conditions. This makes it very easy to read other people’s code, as it
-is executed in the same order as we read it.</p>
+applying the <code>filter()</code> function. Notice that when we use the
+pipe we do not have to type in “flights” inside <code>filter()</code>
+anymore, only the filter conditions. This makes it very easy to read
+other people’s code, as it is executed in the same order as we read
+it.</p>
 <p>The beauty of the pipe is that we can string together multiple
 functions like this, to make a chain of pipes that is as long as we
-need. The “tidyverse” way using pipes:</p>
+need. So the “tidyverse” way using pipes looks like:</p>
 <pre class="r"><code>z &lt;- flights %&gt;%                                             # take the flight data, and then
   filter(origin == &quot;JFK&quot;) %&gt;%                                # filter that data, and then
   select(year, month, day, tailnum, air_time, distance) %&gt;%  # select the columns we need, and then
@@ -783,8 +791,8 @@ z</code></pre>
 ## # … with 111,269 more rows</code></pre>
 <p>In the end this looks a lot like the “programmer” style of writing
 code, but without the redundancy of assigning the intermediate steps or
-to specify to each function what data frame it is that we want to
-use.</p>
+specifying what data frame it is that we want to use to each
+function.</p>
 <div id="exercise-2" class="section level3">
 <h3>Exercise 2</h3>
 <p>Look at the data set “diamonds” that comes built-in to the ggplot2
@@ -815,9 +823,9 @@ carats is it? Try to write your code using pipes!</li>
 <p>In this section we will cover a couple of functions that are great to
 use to generate summary statistics - these are often the first steps
 when it comes to analyzing any type of numerical data.</p>
-<p>One of the simplest ways to summarise data is by counting the number
-of observations based on some criteria. Let’s say we want to find out
-how many flights have departed from New York every month. There are
+<p>One of the simplest ways of summarising data is by counting the
+number of observations based on some criteria. Let’s say we want to find
+out how many flights have departed from New York each month. There are
 several ways to do this:</p>
 <pre class="r"><code>flights %&gt;% 
   group_by(month) %&gt;% 
@@ -873,13 +881,13 @@ several ways to do this:</p>
 ## 11    11 27268
 ## 12    12 28135</code></pre>
 <p>Personally I like to use either the first or last options here. The
-summarise() function is very powerful and can generate more summary
-statistics for you, such as mean, median, min, max and standard
+<code>summarise()</code> function is very powerful and can generate more
+summary statistics for you, such as mean, median, min, max and standard
 deviation. For an overview of what summary functions can be used inside
-summarise() please see the <a href="https://btep.ccr.cancer.gov/docs/rintro/resources/dplyr_cheatsheet.pdf">dplyr
-cheat sheet</a></p>
-<p>Let’s make a table that shows number of outgoing flights and generate
-some summary statistics:</p>
+<code>summarise()</code> please see the <a href="https://btep.ccr.cancer.gov/docs/rintro/resources/dplyr_cheatsheet.pdf">dplyr
+cheat sheet</a>.</p>
+<p>Let’s make a table that shows the number of outgoing flights with
+some other summary statistics:</p>
 <pre class="r"><code>flights %&gt;% 
   group_by(month) %&gt;% 
   summarise(n = n(), 
@@ -902,24 +910,24 @@ some summary statistics:</p>
 ## 11    11 27268             NA            NA            NA
 ## 12    12 28135             NA            NA            NA</code></pre>
 <p>There is no limit to how many summary statistics you can generate
-inside a single summarise(), as long as they are separated by a comma.
-Here I have also split each summary into a separate line in the code to
-improve readability - a good practice!</p>
+inside a single <code>summarise()</code>, as long as they are separated
+by a comma. Here I have also split each summary into a separate line in
+the code to improve readability - a good practice!</p>
 <p>Note however that there is something strange going on with the new
 columns - their values are all NA. This means that there is at least one
-dep_delay observation in the original data that has an NA value. We need
-to remove those first before generating summary statistics. We can do
-this by either outright removing rows that contain an NA, or converting
-the NAs to another value such as 0. In this case we will just remove
-them. We do this with the drop_na() function. Many of these summary
-functions such as mean() also accept an optional field “na.rm” which
-removes the NAs only for that particular calculation (shown in the
-code)</p>
+“dep_delay” observation in the original data that has an NA value. We
+need to remove those first before generating summary statistics. We can
+do this by either outright removing rows that contain an NA, or
+converting the NAs to another value such as 0. In this case we will just
+remove them. We do this with the <code>drop_na()</code> function. Many
+of these summary functions such as <code>mean()</code> also accept an
+optional field “na.rm” which removes the NAs only for that particular
+calculation (shown in the code).</p>
 <pre class="r"><code>flights %&gt;% 
   drop_na(dep_delay) %&gt;%  # remove rows that contain an NA in the dep_delay column
   group_by(month) %&gt;% 
   summarise(n = n(), 
-            mean_dep_delay = mean(dep_delay, na.rm = T), # can also use na.rm = T instead of drop_na
+            mean_dep_delay = mean(dep_delay, na.rm = T), # can also use na.rm = T instead of drop_na()
             min_dep_delay = min(dep_delay), 
             max_dep_delay = max(dep_delay))</code></pre>
 <pre><code>## # A tibble: 12 × 5
@@ -937,10 +945,10 @@ code)</p>
 ## 10    10 28653           6.24           -25           702
 ## 11    11 27035           5.44           -32           798
 ## 12    12 27110          16.6            -43           896</code></pre>
-<p>If you don’t supply drop_na() with any arguments it will look at the
-entire row of data and remove it if it sees an NA in any column.
-Alternatively you can supply it with column names like we have done
-here.</p>
+<p>If you don’t supply any arguments to <code>drop_na()</code> it will
+look at the entire row of data and remove it if it sees an NA in any
+column. Alternatively you can supply it with column names like we have
+done here.</p>
 <div id="exercise-3" class="section level3">
 <h3>Exercise 3</h3>
 <ol style="list-style-type: decimal">
@@ -953,14 +961,15 @@ carriers?</li>
 </div>
 <div id="joins" class="section level1">
 <h1>Joins</h1>
-<p>The concept of joins can be a bit tricky to grasp, but it very
+<p>The concept of joins can be a bit tricky to grasp, but it is very
 helpful to know how to use them. Often if we are working with
 complicated data we store information in separate files. For example,
 observations related to some disease and patient metadata are often
 stored in separate files. We can then link the information from the two
-files using one or more “key” columns, such as a patient ID.</p>
-<p><a href="https://statisticsglobe.com/wp-content/uploads/2019/04/dplyr-data-join-functions-overview_inner_join-left_join-right_join-full_join-semi_join-anti_join.png">This</a>
-image shows the dplyr joins and how they work.</p>
+files using one or more “key” columns present in both files, such as a
+patient ID.</p>
+<p><a href="https://statisticsglobe.com/wp-content/uploads/2019/04/dplyr-data-join-functions-overview_inner_join-left_join-right_join-full_join-semi_join-anti_join.png">This
+image</a> shows the dplyr joins and how they work.</p>
 <p>Let’s say we want to find out how many seats on average an airplane
 has for each of the three NYC airports. To achieve this we need to read
 in a second data set that has information on the planes:</p>
@@ -987,7 +996,7 @@ in a second data set that has information on the planes:</p>
 ## $ speed        &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 ## $ engine       &lt;chr&gt; &quot;Turbo-fan&quot;, &quot;Turbo-fan&quot;, &quot;Turbo-fan&quot;, &quot;Turbo-fan&quot;, &quot;Turb…</code></pre>
 <p>The information that links this and the flights data is the column
-“tailnum”. Let’s connect the “origin” column in the flights data and all
+“tailnum”. Let’s connect the “origin” column in the flights data to all
 the data in the planes data, using the “tailnum” column that appears in
 both data sets.</p>
 <pre class="r"><code>flights %&gt;% 
@@ -1015,10 +1024,10 @@ to add some additional info columns to that are stored elsewhere (in
 this case - planes) without deleting or duplicating information in the
 main data.</p>
 <p>There are some pitfalls when it comes to joining tables. If the key
-column contains duplicated values, e.g. if the tailnum column in the
+column contains duplicated values, e.g. if the “tailnum” column in the
 planes data had two rows with an identical tail number, those rows would
 be duplicated when using joins. This will mess up any downstream summary
-statistics you will be performing on the data. See example below.</p>
+statistics you would perform on the data. See the example below.</p>
 <div id="an-example-of-how-joins-can-duplicate-rows-and-skew-summary-statistics" class="section level3">
 <h3>An example of how joins can duplicate rows and skew summary
 statistics</h3>
@@ -1026,9 +1035,9 @@ statistics</h3>
 flights data but much smaller. The first one will be tree rows, two
 columns: flights 1-3 with tail numbers A1-A3.</p>
 <pre class="r"><code>a &lt;- tibble(flight = c(1,2,3), tailnum = c(&quot;A1&quot;,&quot;A2&quot;,&quot;A3&quot;))</code></pre>
-<p>The second will be info on when the planes were built. Notice that
-someone made a mistake when creating this data, and has accidentally
-copied the A1 information twice!</p>
+<p>The second will be information on when the planes were built. Notice
+that someone made a mistake when creating this data, and has
+accidentally copied the A1 information twice!</p>
 <pre class="r"><code>b &lt;- tibble(tailnum = c(&quot;A1&quot;, &quot;A1&quot;, &quot;A3&quot;, &quot;A4&quot;), year = c(2000, 2000, 2020, 2022))</code></pre>
 <p>Now look what happens when we join these tables:</p>
 <pre class="r"><code>c &lt;- a %&gt;% 
@@ -1060,16 +1069,18 @@ real headache!</p>
 <div id="exercise-4" class="section level3">
 <h3>Exercise 4</h3>
 <ol style="list-style-type: decimal">
-<li>Try copying the code in the example above but replacing “left_join”
-with “right_join”, “inner_join”, “full_join” and “anti_join”. Can you
-predict what the resulting outputs will look like?</li>
+<li>Try copying the code in the example above but replacing
+<code>left_join()</code> with <code>right_join()</code>,
+<code>inner_join()</code>, <code>full_join()</code> and
+<code>anti_join()</code>. Can you predict what the resulting outputs
+will look like?</li>
 <li>What are the full names of the three NYC airports?</li>
 <li>What is the most common destination airport for each of the three
 NYC airports?</li>
 <li>Which airline had the most flights to Ted Stevens Anchorage Intl?
 Make sure to show the full name found in the file
 nycflights13_airlines.txt! Use nycflights13_airports.txt to retrieve the
-full name of the destination airports</li>
+full name of the destination airports.</li>
 <li>How would you join two tables when the key column has different
 names in each of the data frames?</li>
 </ol>
@@ -1079,12 +1090,12 @@ names in each of the data frames?</li>
 <h1>Plotting</h1>
 <p>We will dedicate a full day for plotting later in the week, but it is
 very convenient to summarise data visually, so in this section we will
-introduce the basics of plotting and expand on it later.</p>
+quickly introduce the basics of plotting.</p>
 <p>The R package ggplot2 is considered to be one of the most powerful
-and versatile data-plotting tools out there. It is quite complicated and
-the syntax will seem strange at first. However it works brilliantly with
-the pipe operator and the other packages of the tidyverse. For it to
-work properly the data needs to be in the correct format (long-format
+and versatile data-plotting tools out there. It can be quite complicated
+and the syntax will seem strange at first. However it works brilliantly
+with the pipe operator and the other packages of the tidyverse. For it
+to work properly the data needs to be in the correct format (long-format
 data, we will cover this later).</p>
 <div id="basic-plots-made-with-ggplot2" class="section level2">
 <h2>Basic plots made with ggplot2</h2>
@@ -1106,7 +1117,7 @@ data, we will cover this later).</p>
 <p><img src="data:image/png;base64,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" width="672" /></p>
 <p>Can we spot a relation between departure delay and arrival delay?
 Note that here we are making a dot plot with one dot for each row of
-data - over 300.000 dots. Depending on the speed of your computer it
+data - over 300,000 dots. Depending on the speed of your computer it
 might take a while to plot.</p>
 <pre class="r"><code>flights %&gt;% 
   ggplot(aes(x = dep_delay, y = arr_delay, col = origin)) + 
@@ -1118,16 +1129,17 @@ might take a while to plot.</p>
 <h2>Exercise 5</h2>
 <ol style="list-style-type: decimal">
 <li>Make a plot that compares mean distance flown between NYC
-airports</li>
-<li>(Bonus) Plot the longitude and latitude of every airport in the
-airports data (try adding coord_quickmap()). Visually filter out
-airports that are not on mainland USA</li>
+airports.</li>
+<li>(Bonus) If you are feeling adventurous, plot the longitude and
+latitude of every airport in the airports data with
+<code>coord_quickmap()</code>. Visually filter out airports that are not
+on mainland USA.</li>
 </ol>
 </div>
 </div>
 <div id="pivoting" class="section level1">
 <h1>Pivoting</h1>
-<p>Take a look a the following tables:</p>
+<p>Take a look at the following tables:</p>
 <pre class="r"><code>table1</code></pre>
 <pre><code>## # A tibble: 6 × 4
 ##   country      year  cases population
@@ -1193,7 +1205,7 @@ name tidyverse. There are three criteria which make a data set tidy:</p>
 <div id="exercise-6" class="section level3">
 <h3>Exercise 6</h3>
 <ol style="list-style-type: decimal">
-<li>Take another look at the table 1 - 4 data frames. Which one of them
+<li>Take another look at the table1 - 4 data frames. Which one of them
 do you think meets all the requirements to be “tidy”?</li>
 </ol>
 <p>Let’s have a look at another data set:</p>
@@ -1212,15 +1224,15 @@ do you think meets all the requirements to be “tidy”?</li>
 ## #   `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;,
 ## #   `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;</code></pre>
 <p>This data frame contains information about population numbers and
-growth for some of countries over a span of several years. Is this data
+growth for some countries over a span of several years. Is this data
 tidy?</p>
 <p>If we want to take a look at how the population of a country changes
 over the years then this format is not optimal. ggplot2 and the other
 tidyverse packages work best when the data is in “long” format. In this
 case it would mean changing the data frame so that we replace columns
 2000-2017 with a single column “year”. This is done with the
-pivot_longer() function. Let’s say we are only interested in the
-population growth for Sweden and Denmark:</p>
+<code>pivot_longer()</code> function. Let’s say we are only interested
+in the population growth for Sweden and Denmark:</p>
 <pre class="r"><code>swe_den_population &lt;- world_bank_pop %&gt;% 
   filter(indicator == &quot;SP.POP.TOTL&quot;) %&gt;%      # filter to keep only total population information
   pivot_longer(cols = -c(country, indicator), # pivot all columns in the data except country and indicator 
@@ -1255,14 +1267,15 @@ swe_den_population</code></pre>
 <div id="exercise-7" class="section level3">
 <h3>Exercise 7</h3>
 <ol style="list-style-type: decimal">
-<li>Try using the pivot_wider() function to transform table2 so that it
-looks exactly like table1. Look at the documentation for pivot_wider to
-see the syntax. Documentation can be accessed by adding a “?” to the
-beginning of a function:</li>
+<li>Try using the <code>pivot_wider()</code> function to transform
+table2 so that it looks exactly like table1. Look at the documentation
+for <code>pivot_wider()</code> to see the correct syntax. Documentation
+can be accessed by adding a “?” to the beginning of a function:</li>
 </ol>
 <pre class="r"><code>?pivot_wider()</code></pre>
-<p>Note: pivot wider has very many optional arguments, the only ones you
-need to use for this exercise are “names_from” and “values_from”</p>
+<p>Note: <code>pivot_wider()</code> has many optional arguments, the
+only ones you need to use for this exercise are “names_from” and
+“values_from”.</p>
 </div>
 </div>
 <div id="working-with-strings" class="section level1">
@@ -1271,11 +1284,11 @@ need to use for this exercise are “names_from” and “values_from”</p>
 names, and categorical values. Tidyverse comes with powerful tools to
 work with strings, most are found in the aptly named <a href="https://edrub.in/CheatSheets/cheatSheetStringr.pdf">stringr</a>
 package. We will not focus so much on strings for now, but a couple of
-useful string-related functions are highlited below.</p>
+useful string-related functions are highlighted below.</p>
 <p>For this section we will be using data on artwork found in the Tate
 Art Museum, artwork.csv. Note that this file, unlike the others we have
 worked with, is comma separated. To read in this data we use the
-read_csv() function.</p>
+<code>read_csv()</code> function.</p>
 <pre class="r"><code>artwork &lt;- read_csv(&quot;data/artwork.csv&quot;)</code></pre>
 <pre><code>## Rows: 69201 Columns: 20
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -1310,8 +1323,8 @@ read_csv() function.</p>
 ## $ thumbnailCopyright &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
 ## $ thumbnailUrl       &lt;chr&gt; &quot;http://www.tate.org.uk/art/images/work/A/A00/A0000…
 ## $ url                &lt;chr&gt; &quot;http://www.tate.org.uk/art/artworks/blake-a-figure…</code></pre>
-<p>Use str_sub() to extract substrings (notice that this is inside a
-mutate()).</p>
+<p>Use <code>str_sub()</code> to extract substrings (notice that this is
+done inside a <code>mutate()</code>):</p>
 <pre class="r"><code>artwork %&gt;% 
   mutate(title_short = str_sub(title, 1, 10)) %&gt;% # new column that contains characters 1-10 of title
   select(year, artist, title_short) </code></pre>
@@ -1329,7 +1342,7 @@ mutate()).</p>
 ##  9  1826 Blake, William The Serpen 
 ## 10  1826 Blake, William The Pit of 
 ## # … with 69,191 more rows</code></pre>
-<p>Use str_replace() to replace parts of strings</p>
+<p>Use <code>str_replace()</code> to replace parts of strings:</p>
 <pre class="r"><code>artwork %&gt;% 
   select(artist) %&gt;% 
   mutate(artist = str_replace(artist, &quot;Blake&quot;, &quot;John&quot;)) %&gt;% # Replaces the first occurence of &quot;Blake&quot; with &quot;John&quot;
@@ -1343,9 +1356,9 @@ mutate()).</p>
 ## 4 John, Robert 
 ## 5 John, William
 ## 6 John, William</code></pre>
-<p>separate() splits the column into two or more new columns. paste0()
-can merge columns together (although that is not the only thing it can
-be used for!)</p>
+<p><code>separate()</code> splits the column into two or more new
+columns. <code>paste0()</code> can merge columns together (although that
+is not the only thing it can be used for!):</p>
 <pre class="r"><code>artwork %&gt;% 
   select(artist) %&gt;% 
   head() %&gt;% 
@@ -1372,18 +1385,18 @@ to work with it is a very valuable skill to have.</p>
 </div>
 <div id="other-useful-functions-we-have-not-covered" class="section level1">
 <h1>Other useful functions we have not covered</h1>
-<p>distinct() - gives all unique values in a column</p>
-<p>pull() - extracts a column into a 2D vector</p>
-<p>arrange() - orders the data based on a given column, either
-alphabetically or numerically</p>
-<p>rename() - renames a column</p>
-<p>row_number() - retrieves row number</p>
-<p>slice() - subsets rows by row number</p>
-<p>slice_max() - subsets row(s) with the maximum value of a given
-column</p>
-<p>slice_sample() - subsets random rows</p>
-<p>as_tibble() - converts data into a tibble (the tidyverse version of a
-data frame)</p>
+<p><code>distinct()</code> - gives all unique values in a column</p>
+<p><code>pull()</code> - extracts a column into a 2D vector</p>
+<p><code>arrange()</code> - orders the data based on a given column,
+either alphabetically or numerically</p>
+<p><code>rename()</code> - renames a column</p>
+<p><code>row_number()</code> - retrieves row number</p>
+<p><code>slice()</code> - subsets rows by row number</p>
+<p><code>slice_max()</code> - subsets row(s) with the maximum value of a
+given column</p>
+<p><code>slice_sample()</code> - subsets random rows</p>
+<p><code>as_tibble()</code> - converts data into a tibble (the tidyverse
+version of a data frame)</p>
 </div>
 
 
